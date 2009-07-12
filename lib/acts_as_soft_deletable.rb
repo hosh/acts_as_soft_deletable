@@ -198,9 +198,12 @@ module ActiveRecord #:nodoc:
           # exception.
           def destroy_with_soft_delete
             self.class.transaction do
-              self.class.deleted_class.delete self.id
+              klass = self.class;
+              while klass.deleted_class.nil? do klass = klass.superclass end
+              
+              klass.deleted_class.delete self.id
 
-              deleted = self.class.deleted_class.new
+              deleted = klass.deleted_class.new
               self.attributes.keys.each do |key|
                 deleted.send("#{key}=", self.send(key))
               end
