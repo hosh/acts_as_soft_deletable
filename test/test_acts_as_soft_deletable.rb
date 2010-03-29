@@ -30,23 +30,16 @@ class TestActsAsSoftDeletable < SoftDeleteTestCase
   end
 
   def test_should_copy_decimals_correctly
-    decimal = Decimal.find 1
+    decimal = Decimal.find(1)
+    assert_nil Decimal::Deleted.find_by_id(1)
 
-    assert_difference("Decimal.count", -1) do
-      assert_difference("Decimal::Deleted.count") do
-        decimal.destroy
-      end
-    end
+    decimal.destroy
+    deleted = Decimal::Deleted.find(1) 
+    assert deleted.deleted_at.between?(1.minute.ago, 1.minute.from_now)
 
-    assert_difference("Decimal.count") do
-      assert_difference("Decimal::Deleted.count", -1) do
-        deleted = Decimal::Deleted.find :first
-        deleted.undestroy!
-      end
-    end
-
-    restored = Decimal.find :first
-    assert_soft_delete_models_are_equal decimal, restored
+    deleted.undestroy!
+    assert_soft_delete_models_are_equal deleted, Decimal.find(1) 
+    assert deleted.frozen?
   end
 
   def test_helper_should_work
