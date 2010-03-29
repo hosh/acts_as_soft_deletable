@@ -23,8 +23,9 @@ require File.join(File.dirname(__FILE__),"fixtures", "models.rb")
 require File.join(File.dirname(__FILE__),"fixtures", "schema.rb")
 
 class SoftDeleteTestCase < Test::Unit::TestCase #:nodoc:
-  self.use_transactional_fixtures = false
-  self.use_instantiated_fixtures  = false
+  #self.use_transactional_fixtures = false
+  #self.use_instantiated_fixtures  = false
+  include Test::Unit::ActsAsDeleted
 
   def setup
     # Some hackery to get fixtures to be refreshed before each test without transactions
