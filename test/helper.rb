@@ -26,6 +26,7 @@ class SoftDeleteTestCase < Test::Unit::TestCase #:nodoc:
   #self.use_transactional_fixtures = false
   #self.use_instantiated_fixtures  = false
   include Test::Unit::ActsAsDeleted
+  include ActiveSupport::Testing::Assertions
 
   def setup
     # Some hackery to get fixtures to be refreshed before each test without transactions
