@@ -1,7 +1,9 @@
 require 'rubygems'
 
 require 'test/unit'
-require 'mocha'
+# See: http://stackoverflow.com/questions/1288848/installing-mocha-0-9-7-in-a-rails-2-3-3-project
+# Mocha should be required within the test files directly. There's only one that uses it.
+# require 'mocha'
 
 require 'active_support'
 require 'active_record'

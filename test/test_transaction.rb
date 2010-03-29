@@ -1,4 +1,5 @@
 require File.join(File.dirname(__FILE__), 'helper')
+require 'mocha'
 
 class TestTransaction < SoftDeleteTestCase
   def test_shouldnt_archive_if_destroy_fails
